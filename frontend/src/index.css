@@ -1,0 +1,29 @@
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&family=Poppins:wght@400;500;600&display=swap');
+@import "tailwindcss";
+
+@theme {
+  /* Our custom warm pastel palette */
+  --color-alabaster: #FDFBF7;
+  --color-charcoal: #2D3142;
+  --color-peach: #FFB7B2;
+  --color-lavender: #E8AEB7;
+  --color-mint: #B5E2FA;
+  --color-apricot: #FFDAC1;
+
+  /* Round, geometric fonts */
+  --font-sans: 'Plus Jakarta Sans', 'Poppins', sans-serif;
+
+  /* Ultra-soft diffused shadows */
+  --shadow-soft: 0 10px 30px -10px rgba(45, 49, 66, 0.06);
+  --shadow-dopamine: 0 20px 40px -15px rgba(255, 183, 178, 0.3);
+}
+
+/* Applying our base theme */
+@layer base {
+  body {
+    background-color: var(--color-alabaster);
+    color: var(--color-charcoal);
+    font-family: var(--font-sans);
+    -webkit-font-smoothing: antialiased;
+  }
+}
