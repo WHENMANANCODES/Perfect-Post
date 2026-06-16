@@ -1,0 +1,53 @@
+# ==========================================
+# CORE DEPENDENCIES & BUILD OUTPUTS (Monorepo)
+# ==========================================
+# Frontend Isolated Dependencies & Builds
+frontend/node_modules/
+frontend/dist/
+frontend/dist-ssr/
+
+# Backend Isolated Dependencies & Temporary Storage
+backend/node_modules/
+backend/uploads/*
+!backend/uploads/.gitkeep
+
+# Global Node protections if any fallback exists
+node_modules/
+dist/
+dist-ssr/
+
+# ==========================================
+# 🔐 CRITICAL SECURITY LAYER (Zero-Leakage)
+# ==========================================
+# Exact Path Protection
+backend/.env
+
+# Global Patterns (Just to be 200% Safe)
+.env
+*.local
+.env.*.local
+
+# ==========================================
+# 📋 LOGS & RUNTIME REPORTS
+# ==========================================
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+
+# ==========================================
+# 💻 IDE / SYSTEM SPECIFIC FILES
+# ==========================================
+.vscode/*
+!.vscode/extensions.json
+.idea/
+.DS_Store
+Thumbs.db
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
