@@ -43,7 +43,7 @@ export default function CreationStudio({ onGenerate }) {
     setError(null);
   };
 
-  // 🔥 Integrated Axios Fetch Call
+  // Integrated Axios Fetch Call
   const handleGenerateMagic = async () => {
     if (!imageFile) {
       setError("Please upload a picture first to make it perfect! 🖼️✨");
@@ -58,9 +58,12 @@ export default function CreationStudio({ onGenerate }) {
     formData.append('image', imageFile);
     formData.append('vibe', selectedVibe); 
 
+    // ✅ Production Routing Dynamic Switch
+    const BACKEND_URL = import.meta.env.VITE_BACKEND_URL || 'https://perfect-post.onrender.com';
+
     try {
-      console.log("🚀 Requesting backend engine...");
-      const response = await axios.post('http://localhost:5000/api/posts/generate', formData, {
+      console.log("Requesting backend engine at:", BACKEND_URL);
+      const response = await axios.post(`${BACKEND_URL}/api/posts/generate`, formData, {
         headers: { 'Content-Type': 'multipart/form-data' }
       });
 
@@ -68,9 +71,6 @@ export default function CreationStudio({ onGenerate }) {
         console.log("📥 AI insights loaded successfully.");
         setResult(response.data.data);
         
-        // 🔥 MODIFIED PARAMETERS SEQUENCE:
-        // App.jsx expect kar raha tha handleGenerationTrigger(image, platform, vibe, aiResponseData)
-        // Hum yahan wahi sequential logic map kar rahe hain. 
         if (onGenerate) {
           onGenerate(
             response.data.imageUrl, // Cloudinary link banega preview
@@ -84,9 +84,13 @@ export default function CreationStudio({ onGenerate }) {
       }
     } catch (err) {
       console.error("Fetch Error:", err);
-      setError(err.response?.data?.message || "Server connection failed. Is your backend running on port 5000?");
+      // ✅ Production Responsive Error Message
+      setError(
+        err.response?.data?.message || 
+        "Engine connection failed. Please wait a moment while the server spins up and try again! ⚡"
+      );
     } finally {
-      setLoading(false); 
+      loading && setLoading(false); 
     }
   };
 
@@ -184,7 +188,7 @@ export default function CreationStudio({ onGenerate }) {
             </>
           )}
 
-          {/* ⏳ SUNDAR SKELETON LOADER */}
+          {/* SUNDAR SKELETON LOADER */}
           {loading && (
             <div className="bg-white p-6 rounded-3xl shadow-soft border border-charcoal/5 space-y-6 animate-pulse min-h-[350px] flex flex-col justify-center">
               <div className="space-y-3">
@@ -201,7 +205,7 @@ export default function CreationStudio({ onGenerate }) {
             </div>
           )}
 
-          {/* ❌ ERROR ALERT */}
+          {/* ERROR ALERT */}
           {error && (
             <div className="bg-red-50 border border-red-200 p-4 rounded-2xl text-red-700 text-sm flex items-center gap-2">
               <span>⚠️</span> <p className="font-medium">{error}</p>
