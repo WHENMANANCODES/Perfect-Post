@@ -59,7 +59,11 @@ export default function CreationStudio({ onGenerate }) {
     formData.append('vibe', selectedVibe); 
 
     // ✅ Production Routing Dynamic Switch
-    const BACKEND_URL = import.meta.env.VITE_BACKEND_URL || 'https://perfect-post.onrender.com';
+// ✅ Automatically detects if you are on localhost or live production
+const isLocalhost = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1';
+
+const BACKEND_URL = import.meta.env.VITE_BACKEND_URL || 
+                    (isLocalhost ? 'http://localhost:5000' : 'https://perfect-post.onrender.com');
 
     try {
       console.log("Requesting backend engine at:", BACKEND_URL);
