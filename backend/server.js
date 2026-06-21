@@ -38,7 +38,7 @@ app.post('/api/posts/generate', upload.single('image'), async (req, res) => {
     console.log(`Multer ne file pakad li. Cloudinary par ja rahi hai...`);
 
     // 2. Upload to Cloudinary
-    const cloudUrl = await uploadToCloudinary(req.file.path);
+   const cloudUrl = await uploadToCloudinary(req.file.buffer);
     if (!cloudUrl) {
       return res.status(500).json({ success: false, message: "Cloudinary upload failed" });
     }

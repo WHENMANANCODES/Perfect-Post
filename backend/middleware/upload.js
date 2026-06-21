@@ -1,28 +1,20 @@
 import multer from 'multer';
 import path from 'path';
 
-// 1. Storage setup: Files server par kahan aur kis naam se save hongi
-const storage = multer.diskStorage({
-  destination: (req, file, cb) => {
-    cb(null, 'uploads/'); // Yeh hamare local server folder path me files bhejega
-  },
-  filename: (req, file, cb) => {
-    // File ko ek unique naam dene ke liye timestamp joda (e.g., image-17182928.png)
-    const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1E9);
-    cb(null, file.fieldname + '-' + uniqueSuffix + path.extname(file.originalname));
-  }
-});
+// 1. Storage setup: Shifted from local disk to temporary RAM Memory buffer stream 🚀
+// Isse Render cloud container par directory crash (ENOENT) ka jhanjhat 100% khatam!
+const storage = multer.memoryStorage();
 
-// 2. File validation filter system
+// 2. File validation filter system (Aapka clean core filter logic intact hai)
 const fileFilter = (req, file, cb) => {
   const allowedTypes = /jpeg|jpg|png|webp/;
   const extname = allowedTypes.test(path.extname(file.originalname).toLowerCase());
   const mimetype = allowedTypes.test(file.mimetype);
 
   if (extname && mimetype) {
-    return cb(null, true); // File accepted
+    return cb(null, true); // File accepted safely in memory buffer
   } else {
-    cb(new Error('Only standard image assets (JPG, JPEG, PNG, WEBP) are authorized! ❌'));
+    cb(new Error('Only standard image assets (JPG, JPEG, PNG, WEBP) are authorized! ❌'), false);
   }
 };
 
